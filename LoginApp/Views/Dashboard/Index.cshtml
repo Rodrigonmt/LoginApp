@@ -1,0 +1,124 @@
+﻿@{
+    ViewData["Title"] = "Painel Principal";
+    var usuario = ViewBag.Usuario;
+}
+
+<style>
+    body {
+        background: linear-gradient(to right, #74ebd5, #acb6e5);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 60px auto;
+        text-align: center;
+    }
+
+    h1 {
+        color: #333;
+        margin-bottom: 30px;
+    }
+
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+        padding: 20px;
+    }
+
+    .card {
+        background-color: white;
+        padding: 30px 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        cursor: pointer;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .card h2 {
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        .card p {
+            color: #555;
+        }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .logout {
+        position: fixed;
+        top: 20px;
+        right: 30px;
+        background-color: crimson;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+        .logout:hover {
+            background-color: darkred;
+        }
+</style>
+
+<a href="/Login/Index" class="logout">Sair</a>
+
+<div class="container">
+    <h1>Bem-vindo, @usuario!</h1>
+
+    <div class="card-grid">
+        <a href="/Chamado/Criar">
+            <div class="card">
+                <h2>🛠 Criar Chamado</h2>
+                <p>Registre um novo atendimento</p>
+            </div>
+        </a>
+
+        <a href="/Chamado/Historico">
+            <div class="card">
+                <h2>📜 Histórico de Chamados</h2>
+                <p>Consulte chamados anteriores</p>
+            </div>
+        </a>
+
+        <a href="/Produto/Vender">
+            <div class="card">
+                <h2>💼 Vender Produtos</h2>
+                <p>Cadastre itens para venda</p>
+            </div>
+        </a>
+
+        <a href="/Produto/Comprar">
+            <div class="card">
+                <h2>🛒 Comprar Produtos</h2>
+                <p>Veja e compre produtos</p>
+            </div>
+        </a>
+
+        <a href="/Chamado/Adm">
+            <div class="card">
+                <h2>👨‍💼 Chamados ADM</h2>
+                <p>Visualização administrativa</p>
+            </div>
+        </a>
+
+        <a href="/Usuario/Editar">
+            <div class="card">
+                <h2>⚙️ Alterar Cadastro</h2>
+                <p>Atualize seus dados pessoais</p>
+            </div>
+        </a>
+    </div>
+</div>
