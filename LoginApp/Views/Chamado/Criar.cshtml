@@ -1,0 +1,102 @@
+﻿@model LoginApp.Models.Chamado
+
+@{
+    ViewData["Title"] = "Criar Chamado";
+    var equipamentos = new[] { "Geladeira", "Máquina de Lavar", "Forno", "Ar Condicionado", "Freezer", "Outros" };
+}
+
+<style>
+    .equipamentos {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .equipamento {
+        border: 2px solid transparent;
+        padding: 10px;
+        text-align: center;
+        cursor: pointer;
+        border-radius: 10px;
+        transition: 0.3s;
+    }
+
+    .equipamento:hover, .equipamento.selecionado {
+        border-color: #007bff;
+        background-color: #e9f5ff;
+    }
+
+    .equipamento img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .form-section {
+        max-width: 500px;
+        margin: auto;
+    }
+</style>
+
+<div class="form-section">
+    <h2>Criar Chamado</h2>
+
+    @if (TempData["Msg"] != null)
+    {
+        <p style="color: green;">@TempData["Msg"]</p>
+    }
+
+    <form asp-action="Criar" method="post">
+        <h4>Escolha o equipamento:</h4>
+        <div class="equipamentos">
+            @foreach (var item in equipamentos)
+            {
+                <div class="equipamento" onclick="selecionarEquipamento('@item')">
+                    <img src="~/images/@($"{item.ToLower().Replace(" ", "")}.png")" alt="@item" />
+                    <p>@item</p>
+                </div>
+            }
+        </div>
+
+        <input type="hidden" name="Equipamento" id="equipamentoSelecionado" required />
+
+        <div>
+            <label>Data para retirada:</label>
+            <input type="date" name="DataHoraAgendada" required />
+        </div>
+
+        <div>
+            <label>Hora para retirada:</label>
+            <input type="time" name="HoraAgendada" required />
+        </div>
+
+        <div>
+            <label>Endereço:</label>
+            <input type="text" name="Endereco" required style="width:100%;" />
+        </div>
+
+        <br />
+        <button type="submit">Salvar Chamado</button>
+    </form>
+</div>
+
+<script>
+    function selecionarEquipamento(nome) {
+        document.getElementById('equipamentoSelecionado').value = nome;
+        document.querySelectorAll('.equipamento').forEach(el => el.classList.remove('selecionado'));
+        event.currentTarget.classList.add('selecionado');
+    }
+
+    // Combina data + hora
+    document.querySelector('form').addEventListener('submit', function (e) {
+        const data = document.querySelector('input[name="DataHoraAgendada"]').value;
+        const hora = document.querySelector('input[name="HoraAgendada"]').value;
+        const dtFinal = new Date(`${data}T${hora}`);
+        const hidden = document.createElement('input');
+        hidden.type = 'hidden';
+        hidden.name = 'DataHoraAgendada';
+        hidden.value = dtFinal.toISOString();
+        this.appendChild(hidden);
+    });
+</script>
